@@ -1,4 +1,4 @@
-﻿using FilmDB.Models;
+﻿using FilmDB2.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FilmDB.Controllers
+namespace FilmDB2.Controllers
 {
     public class HomeController : Controller
     {
