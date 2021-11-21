@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -60,5 +61,65 @@ namespace FilmDB2.Controllers
             //return Redirect("/");
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public IActionResult Remove(int id)
+        {
+            var manager = new FilmManager();
+            var film = manager.GetFilm(id);
+            return View(film);
+        }
+
+        [HttpPost] // wzorzec dekoratora
+        public IActionResult RemoveConfirm(int id)
+        {
+            var manager = new FilmManager();
+            try
+            {
+                manager.RemoveFilm(id);
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+                //var film = manager.GetFilm(id);
+                //return RedirectToAction(String.Format("Remove/{0}", id));
+                //return BadRequest();
+                return RedirectToAction("Index");
+            }
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [HttpGet]
+        public IActionResult Edit (int id)
+        {
+            var manager = new FilmManager();
+            var film = manager.GetFilm(id);
+            return View(film);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(FilmModel film)
+        {
+            var manager = new FilmManager();
+            
+            try
+            {
+                manager.UpdateFilm(film);
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+
+                return RedirectToAction("Index");
+            }
+
+            
+        }
+
     }
 }
